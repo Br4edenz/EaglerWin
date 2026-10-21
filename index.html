@@ -1,0 +1,550 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EaglerWin</title>
+    <style>
+        :root {
+            --bg-dark: #150605;
+            --bg-dark: #150605;
+            --fire-orange: #ff8a24;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 0 20px 88px;
+            background:
+                radial-gradient(ellipse at 50% 100%, rgba(174, 34, 9, 0.42), transparent 55%),
+                radial-gradient(ellipse at 50% 0%, rgba(90, 18, 10, 0.35), transparent 48%),
+                var(--bg-dark);
+            color: white;
+            font-family: Georgia, 'Times New Roman', serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-nav {
+            width: calc(100% + 40px);
+            min-height: 72px;
+            margin: 0 -20px 40px;
+            padding: 0 max(20px, calc((100% - 940px) / 2));
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            border-bottom: 1px solid rgba(255, 154, 85, 0.3);
+            background: rgba(21, 6, 5, 0.72);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(16px);
+        }
+
+        .nav-brand {
+            color: #ffd1ae;
+            font: bold 0.95rem 'Segoe UI', sans-serif;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            min-height: 42px;
+            padding: 0 16px;
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid rgba(255, 190, 145, 0.18);
+            border-radius: 7px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 116, 52, 0.04));
+            color: #f7d8c4;
+            font: 600 0.92rem 'Segoe UI', sans-serif;
+            text-decoration: none;
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            transition: color 0.18s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a[aria-current="page"] {
+            border-color: rgba(255, 154, 85, 0.42);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.13), rgba(255, 116, 52, 0.16));
+            color: #ffb879;
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 6px 18px rgba(255, 85, 34, 0.12);
+            transform: translateY(-1px);
+        }
+
+        .nav-links a:focus-visible {
+            outline: 2px solid #ffc06a;
+            outline-offset: 3px;
+        }
+
+        .page-content {
+            width: 100%;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: min(100%, 620px);
+            text-align: center;
+            padding: 42px 36px;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(73, 22, 14, 0.72), rgba(24, 8, 7, 0.78)) padding-box,
+                        linear-gradient(135deg, #70190d, var(--fire-orange), #8e1d10) border-box;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.38), 0 0 36px rgba(255, 59, 32, 0.2), inset 0 1px rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(22px) saturate(135%);
+        }
+
+        h1 {
+            font-size: 3rem;
+            line-height: 1.05;
+            margin: 10px 0 32px;
+            background: linear-gradient(110deg, #fff1d5, #ff9a3c 55%, #ff4025);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h3 {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin: 0;
+            color: #ff9a62;
+            letter-spacing: 2px;
+        }
+
+        .client-picker {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 390px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .client-picker-label {
+            color: #ffd1ae;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .client-select {
+            position: relative;
+        }
+
+        .client-select-trigger {
+            width: 100%;
+            min-height: 60px;
+            padding: 10px 48px 10px 18px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            border: 1px solid rgba(255, 154, 85, 0.42);
+            border-radius: 9px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(74, 20, 12, 0.5));
+            color: #fff4e8;
+            text-align: left;
+            cursor: pointer;
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 8px 24px rgba(0, 0, 0, 0.22);
+            backdrop-filter: blur(18px) saturate(140%);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, transform 0.2s ease;
+        }
+
+        .client-select-trigger:hover,
+        .client-select.is-open .client-select-trigger {
+            border-color: rgba(255, 186, 115, 0.9);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(91, 25, 14, 0.66));
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.26), 0 10px 26px rgba(255, 85, 34, 0.16);
+        }
+
+        .client-select-trigger:focus-visible {
+            border-color: #ff9a55;
+            box-shadow: 0 0 0 3px rgba(255, 124, 54, 0.2), 0 8px 22px rgba(0, 0, 0, 0.28);
+            outline: none;
+        }
+
+        .client-select-trigger::after {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            width: 10px;
+            height: 10px;
+            border-right: 2px solid #ffad69;
+            border-bottom: 2px solid #ffad69;
+            content: '';
+            transform: translateY(-70%) rotate(45deg);
+            transition: transform 0.2s ease;
+        }
+
+        .client-select.is-open .client-select-trigger::after {
+            transform: translateY(-25%) rotate(225deg);
+        }
+
+        .client-select-value {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .client-options {
+            position: absolute;
+            z-index: 2;
+            top: calc(100% + 8px);
+            right: 0;
+            left: 0;
+            display: grid;
+            max-height: min(220px, 40vh);
+            gap: 5px;
+            padding: 7px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 154, 85, 0.48);
+            border-radius: 10px;
+            background: rgba(35, 10, 7, 0.97);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.48), inset 0 1px rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(18px);
+            overscroll-behavior: contain;
+            scrollbar-color: rgba(255, 154, 85, 0.65) rgba(35, 10, 7, 0.7);
+            scrollbar-width: thin;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-7px) scale(0.98);
+            transform-origin: top center;
+            transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+            visibility: hidden;
+        }
+
+        .client-select.is-open .client-options {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+            visibility: visible;
+        }
+
+        .client-option {
+            position: relative;
+        }
+
+        .client-option input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+        }
+
+        .client-option label {
+            min-height: 56px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            border: 1px solid rgba(255, 154, 85, 0.3);
+            border-radius: 9px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(74, 20, 12, 0.38));
+            color: #fff4e8;
+            cursor: pointer;
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, transform 0.2s ease;
+        }
+
+        .client-option label:hover {
+            border-color: rgba(255, 186, 115, 0.8);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.13), rgba(91, 25, 14, 0.62));
+            transform: translateY(-1px);
+        }
+
+        .client-option input:checked + label {
+            border-color: #ff9a55;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 116, 52, 0.24), rgba(91, 25, 14, 0.72));
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 0 0 1px rgba(255, 154, 85, 0.26), 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .client-option input:focus-visible + label {
+            outline: 2px solid #ffc06a;
+            outline-offset: 3px;
+        }
+
+        .client-option-name {
+            font: 600 0.95rem 'Segoe UI', sans-serif;
+        }
+
+        .client-option-description {
+            color: #e9bda0;
+            font: 0.78rem/1.35 'Segoe UI', sans-serif;
+        }
+
+        .launch-btn:focus-visible,
+        .donate-btn:focus-visible {
+            outline: 3px solid #ffc06a;
+            outline-offset: 3px;
+        }
+
+        @keyframes button-wobble {
+            0%, 100% { rotate: 0deg; }
+            25% { rotate: -2deg; }
+            50% { rotate: 1.5deg; }
+            75% { rotate: -1deg; }
+        }
+
+        .nav-links a:active,
+        .launch-btn:active,
+        .donate-btn:active {
+            animation: button-wobble 360ms ease-in-out;
+        }
+
+        .launch-btn {
+            min-height: 56px;
+            margin-top: 8px;
+            padding: 14px 24px;
+            font: bold 1.1rem 'Segoe UI', sans-serif;
+            font-weight: bold;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(110deg, rgba(185, 39, 23, 0.68), rgba(240, 100, 33, 0.64));
+            border: 1px solid rgba(255, 205, 155, 0.76);
+            border-radius: 9px;
+            cursor: pointer;
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 8px 26px rgba(220, 51, 22, 0.3);
+            backdrop-filter: blur(18px) saturate(145%);
+            transition: transform 0.16s ease, box-shadow 0.2s ease, background 0.25s ease;
+        }
+
+        .launch-btn::before {
+            position: absolute;
+            top: -40%;
+            bottom: -40%;
+            left: -45%;
+            width: 28%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.38), transparent);
+            content: '';
+            pointer-events: none;
+            transform: skewX(-20deg);
+            transition: left 0.5s ease;
+        }
+
+        .launch-btn:hover::before {
+            left: 125%;
+        }
+
+        .launch-btn:hover {
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.32), 0 12px 32px rgba(255, 85, 34, 0.48);
+            transform: translateY(-2px) scale(1.01);
+        }
+
+        .launch-btn:active,
+        .donate-btn:active {
+            transform: translateY(1px) scale(0.97);
+            box-shadow: inset 0 2px 9px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(255, 85, 34, 0.28);
+        }
+
+        .launch-btn[data-client="tuff"] {
+            background: linear-gradient(110deg, rgba(186, 47, 23, 0.72), rgba(255, 139, 47, 0.72));
+        }
+
+        .launch-btn[data-client="newest"] {
+            background: linear-gradient(110deg, rgba(151, 31, 28, 0.72), rgba(255, 91, 48, 0.72));
+        }
+
+        .donate-btn {
+            position: fixed;
+            left: 18px;
+            bottom: 18px;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            min-height: 46px;
+            padding: 0 18px;
+            border: 1px solid rgba(255, 195, 144, 0.72);
+            border-radius: 9px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.13), rgba(201, 51, 30, 0.62), rgba(112, 25, 17, 0.68));
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.22), 0 8px 24px rgba(0, 0, 0, 0.36);
+            color: white;
+            font: bold 0.95rem 'Segoe UI', sans-serif;
+            text-decoration: none;
+            backdrop-filter: blur(18px) saturate(145%);
+            transition: background 0.2s ease, transform 0.16s ease, box-shadow 0.2s ease;
+        }
+
+        .donate-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(231, 74, 40, 0.78), rgba(143, 33, 21, 0.82));
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 12px 30px rgba(220, 51, 22, 0.35);
+            transform: translateY(-2px);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+                animation: none !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-nav {
+                min-height: 64px;
+                margin-bottom: 28px;
+                gap: 8px;
+            }
+
+            .nav-brand {
+                font-size: 0.8rem;
+            }
+
+            .nav-links {
+                gap: 0;
+            }
+
+            .nav-links a {
+                padding: 0 9px;
+                font-size: 0.82rem;
+            }
+
+            .container {
+                padding: 34px 22px;
+            }
+
+            .content-page {
+                padding: 28px 22px;
+            }
+
+            h1 {
+                font-size: 2.15rem;
+            }
+
+            .server-list li {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .server-list span {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="page-nav">
+        <span class="nav-brand">Eaglercraft</span>
+        <nav class="nav-links" aria-label="Main navigation">
+            <a href="index.html" aria-current="page">Home</a>
+            <a href="about.html">About</a>
+            <a href="servers.html">Servers</a>
+        </nav>
+    </header>
+
+    <main class="page-content">
+        <section class="container" aria-labelledby="home-title">
+            <h3>UnknownError's</h3>
+            <h1 id="home-title">Eaglercraft Client Launcher</h1>
+            <div class="client-picker">
+                <span class="client-picker-label" id="client-picker-label">Choose a client</span>
+                <div class="client-select" id="client-select">
+                    <button class="client-select-trigger" id="client-select-trigger" type="button" aria-expanded="false" aria-controls="client-options">
+                        <span class="client-select-value">
+                            <span class="client-option-name" id="selected-client-name">Eaglercraft 26.2</span>
+                            <span class="client-option-description" id="selected-client-description">Newest version</span>
+                        </span>
+                    </button>
+                    <div class="client-options" id="client-options" role="radiogroup" aria-labelledby="client-picker-label">
+                        <div class="client-option">
+                            <input id="client-newest" type="radio" name="client" value="eagler262.html" data-name="Eaglercraft 26.2" data-description="Newest version" data-client="newest" checked>
+                            <label for="client-newest">
+                                <span class="client-option-name">Eaglercraft 26.2</span>
+                                <span class="client-option-description">Newest version</span>
+                            </label>
+                        </div>
+                        <div class="client-option">
+                            <input id="client-normal" type="radio" name="client" value="eaglercraft-base.html" data-name="Normal Client" data-description="Just generic Minecraft" data-client="normal">
+                            <label for="client-normal">
+                                <span class="client-option-name">Normal Client</span>
+                                <span class="client-option-description">Just generic Minecraft</span>
+                            </label>
+                        </div>
+                        <div class="client-option">
+                            <input id="client-tuff" type="radio" name="client" value="tuffclient.html" data-name="Tuff Client" data-description="FPS and refined mods" data-client="tuff">
+                            <label for="client-tuff">
+                                <span class="client-option-name">Tuff Client</span>
+                                <span class="client-option-description">FPS and refined mods</span>
+                            </label>
+                        </div>
+                        <div class="client-option">
+                            <input id="client-spectral" type="radio" name="client" value="spectral.html" data-name="Spectral Client" data-description="My own personal client (beta)" data-client="Custom">
+                            <label for="client-spectral">
+                                <span class="client-option-name">Spectral Client</span>
+                                <span class="client-option-description">My own personal client (beta)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <button class="launch-btn" id="launch-client" type="button" data-client="newest">Launch Eaglercraft 26.2</button>
+            </div>
+        </section>
+    </main>
+
+    <a class="donate-btn" href="galactic.html" target="_blank" rel="noopener noreferrer">Donate</a>
+
+    <script>
+        const launchButton = document.getElementById('launch-client');
+        const clientSelect = document.getElementById('client-select');
+        const clientSelectTrigger = document.getElementById('client-select-trigger');
+        const selectedClientName = document.getElementById('selected-client-name');
+        const selectedClientDescription = document.getElementById('selected-client-description');
+        const clientOptions = document.querySelectorAll('input[name="client"]');
+
+        clientSelectTrigger.addEventListener('click', () => {
+            const isOpen = clientSelect.classList.toggle('is-open');
+            clientSelectTrigger.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        clientOptions.forEach((clientOption) => {
+            clientOption.addEventListener('change', () => {
+                selectedClientName.textContent = clientOption.dataset.name;
+                selectedClientDescription.textContent = clientOption.dataset.description;
+                launchButton.dataset.client = clientOption.dataset.client;
+                launchButton.textContent = `Launch ${clientOption.dataset.name}`;
+                clientSelect.classList.remove('is-open');
+                clientSelectTrigger.setAttribute('aria-expanded', 'false');
+                clientSelectTrigger.focus();
+            });
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!clientSelect.contains(event.target)) {
+                clientSelect.classList.remove('is-open');
+                clientSelectTrigger.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && clientSelect.classList.contains('is-open')) {
+                clientSelect.classList.remove('is-open');
+                clientSelectTrigger.setAttribute('aria-expanded', 'false');
+                clientSelectTrigger.focus();
+            }
+        });
+
+        launchButton.addEventListener('click', () => {
+            const selectedClient = document.querySelector('input[name="client"]:checked');
+            if (selectedClient) {
+                window.location.href = selectedClient.value;
+            }
+        });
+    </script>
+</body>
+</html>

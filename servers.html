@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servers | EaglerWin</title>
+    <style>
+        :root {
+            --bg-dark: #150605;
+            --fire-orange: #ff8a24;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 0 20px 88px;
+            display: flex;
+            flex-direction: column;
+            background:
+                radial-gradient(ellipse at 50% 100%, rgba(174, 34, 9, 0.42), transparent 55%),
+                radial-gradient(ellipse at 50% 0%, rgba(90, 18, 10, 0.35), transparent 48%),
+                var(--bg-dark);
+            color: white;
+            font-family: Georgia, 'Times New Roman', serif;
+        }
+
+        .page-nav {
+            width: calc(100% + 40px);
+            min-height: 72px;
+            margin: 0 -20px 40px;
+            padding: 0 max(20px, calc((100% - 940px) / 2));
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            border-bottom: 1px solid rgba(255, 154, 85, 0.3);
+            background: rgba(21, 6, 5, 0.72);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(16px);
+        }
+
+        .nav-brand {
+            color: #ffd1ae;
+            font: bold 0.95rem 'Segoe UI', sans-serif;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            min-height: 42px;
+            padding: 0 16px;
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid transparent;
+            border-radius: 7px;
+            color: #f7d8c4;
+            font: 600 0.92rem 'Segoe UI', sans-serif;
+            text-decoration: none;
+            transition: color 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a[aria-current="page"] {
+            border-color: rgba(255, 154, 85, 0.42);
+            background: rgba(255, 116, 52, 0.13);
+            color: #ffb879;
+        }
+
+        .nav-links a:focus-visible {
+            outline: 2px solid #ffc06a;
+            outline-offset: 3px;
+        }
+
+        main {
+            width: 100%;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content-page {
+            width: min(100%, 760px);
+            padding: 38px;
+            border: 1px solid rgba(255, 138, 36, 0.5);
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(73, 22, 14, 0.76), rgba(24, 8, 7, 0.82));
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
+        }
+
+        h1 {
+            margin: 10px 0 18px;
+            font-size: 3rem;
+            line-height: 1.05;
+            background: linear-gradient(110deg, #fff1d5, #ff9a3c 55%, #ff4025);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h3 {
+            margin: 0;
+            color: #ff9a62;
+            font: 0.85rem 'Segoe UI', sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        p {
+            color: #f4d4c2;
+            font: 1rem/1.7 'Segoe UI', sans-serif;
+        }
+
+        .server-list {
+            margin: 26px 0 0;
+            padding: 0;
+            list-style: none;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .server-list li {
+            padding: 16px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            border-top: 1px solid rgba(255, 154, 85, 0.24);
+        }
+
+        .server-list strong {
+            color: #fff1d5;
+        }
+
+        .server-list span {
+            color: #ffb879;
+            overflow-wrap: anywhere;
+            text-align: right;
+        }
+
+        @media (max-width: 480px) {
+            .page-nav {
+                min-height: 64px;
+                margin-bottom: 28px;
+                gap: 8px;
+            }
+
+            .nav-brand {
+                font-size: 0.8rem;
+            }
+
+            .nav-links {
+                gap: 0;
+            }
+
+            .nav-links a {
+                padding: 0 9px;
+                font-size: 0.82rem;
+            }
+
+            .content-page {
+                padding: 28px 22px;
+            }
+
+            h1 {
+                font-size: 2.15rem;
+            }
+
+            .server-list li {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .server-list span {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="page-nav">
+        <span class="nav-brand">Eaglercraft</span>
+        <nav class="nav-links" aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="servers.html" aria-current="page">Servers</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="content-page" aria-labelledby="servers-title">
+            <h3>Servers</h3>
+            <h1 id="servers-title">Featured servers</h1>
+            <p>These are all of the MessCraft server IP's</p>
+            <ul class="server-list">
+                <li><strong>MessCraft 26.2</strong><span>wss://messcraft.uk</span></li>
+                <li><strong>MessCraft 1.12</strong><span>wss://messcraft.ovh</span></li>
+                <li><strong>MessCraft 1.8</strong><span>wss://x.mess.eu.org</span></li>
+                <li><strong>MessCraft 1.5</strong><span>wss://mess.eu.org</span></li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
